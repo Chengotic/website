@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Automotive | Premium Car Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0a2463;
+            --primary-yellow: #ffd166;
+            --secondary-blue: #1e3d8f;
+            --dark-blue: #051438;
+            --light-gray: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--dark-blue);
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(5, 20, 56, 0.7), rgba(5, 20, 56, 0.9)), url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ba6bd86a-54e2-478b-ae14-50c650b1c1ed.png') center/cover no-repeat;
+        }
+        
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-yellow);
+            color: var(--dark-blue);
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 4px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 209, 102, 0.3);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-yellow);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .car-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 209, 102, 0.1);
+        }
+        
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 209, 102, 0.3);
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 3px;
+            background-color: var(--primary-yellow);
+        }
+        
+        .feature-card {
+            background: linear-gradient(135deg, rgba(10, 36, 99, 0.8) 0%, rgba(30, 61, 143, 0.9) 100%);
+            border-radius: 8px;
+        }
+        
+        .feature-icon {
+            color: var(--primary-yellow);
+            font-size: 2.5rem;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.1) 0%, rgba(10, 36, 99, 0.8) 100%);
+            border-left: 3px solid var(--primary-yellow);
+        }
+        
+        .car-filter-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .car-filter-btn.active, .car-filter-btn:hover {
+            background: var(--primary-yellow);
+            color: var(--dark-blue);
+            border-color: transparent;
+        }
+        
+        .carousel {
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+        
+        .carousel-item {
+            scroll-snap-align: start;
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .special-offer {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero {
+                height: 80vh;
+                padding-top: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full py-4 px-6 md:px-12 zthe-50 bg-gradient-to-b from-black/50 to-transparent">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-car text-3xl text-yellow-400"></i>
+                <span class="logo-text text-xl font-bold">VELOCITY</span>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#" class="nav-link">Home</a>
+                <a href="#showcase" class="nav-link">Showroom</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#testimonials" class="nav-link">Testimonials</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            
+            <button class="btn-primary hidden md:block">
+                Book a Test Drive
+            </button>
+            
+            <button class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero flex items-center justify-center">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-on-scroll" style="transition-delay: 0.1s;">
+                Experience <span class="text-yellow-400">Automotive</span> Excellence
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-on-scroll" style="transition-delay: 0.2s;">
+                Discover the most exclusive collection of high-performance vehicles engineered for those who demand extraordinary.
+            </p>
+            <div class="animate-on-scroll" style="transition-delay: 0.3s;">
+                <button class="btn-primary mr-4">
+                    Explore Collection
+                </button>
+                <button class="border border-yellow-400 text-yellow-400 font-semibold px-6 py-3 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                    Virtual Tour
+                </button>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-2xl text-yellow-400"></i>
+        </div>
+    </section>
+    
+    <!-- Car Showcase Section -->
+    <section id="showcase" class="py-20 px-6 md:px-12 bg-gradient-to-b from-dark-blue to-primary-blue">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold mb-16 text-center animate-on-scroll">Our Premium Collection</h2>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12 animate-on-scroll">
+                <button class="car-filter-btn active" data-filter="all">All Models</button>
+                <button class="car-filter-btn" data-filter="sports">Sports</button>
+                <button class="car-filter-btn" data-filter="luxury">Luxury</button>
+                <button class="car-filter-btn" data-filter="muscle">Muscle</button>
+                <button class="car-filter-btn" data-filter="electric">Electric</button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Car Card 1 -->
+                <div class="car-card animate-on-scroll" data-category="sports">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/871a3169-e24c-407e-918f-4f1155987285.png" alt="Red Ferrari SF90 Stradale sports car on mountain road with sunset backdrop" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Ferrari SF90 Stradale</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 px-3 py-1 rounded-full text-sm">NEW</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">986 HP Hybrid V8 | 0-60 mph in 2.5s</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold text-xl">$625,000</span>
+                            <button class="border border-yellow-400 text-yellow-400 px-4 py-1 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Card 2 -->
+                <div class="car-card animate-on-scroll" data-category="luxury">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a5dffa64-e9a7-4d27-b88e-1438bafebd07.png" alt="Black Rolls-Royce Phantom luxury sedan parked in front of an elegant hotel" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Rolls-Royce Phantom</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 px-3 py-1 rounded-full text-sm">CUSTOM</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">6.75L V12 | Bespoke Luxury</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold text-xl">$460,000</span>
+                            <button class="border border-yellow-400 text-yellow-400 px-4 py-1 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Card 3 -->
+                <div class="car-card animate-on-scroll" data-category="muscle">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f2a3f1c4-4ebb-4a80-9398-c3f5253cb19e.png" alt="Orange Dodge Challenger SRT with black stripes parked in desert landscape" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Dodge Challenger SRT</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 px-3 py-1 rounded-full text-sm">LAST CALL</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">6.2L Supercharged HEMI V8 | 797 HP</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold text-xl">$87,000</span>
+                            <button class="border border-yellow-400 text-yellow-400 px-4 py-1 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Card 4 -->
+                <div class="car-card animate-on-scroll" data-category="electric">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4fd4227e-423d-4c16-9b30-7eadd80df7f9.png" alt="Tesla Roadster electric sports car in metallic red parked on city street" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Tesla Roadster</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 px-3 py-1 rounded-full text-sm">FUTURE</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">All-Electric | 1.9s 0-60 mph | 620 mi range</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold text-xl">$200,000</span>
+                            <button class="border border-yellow-400 text-yellow-400 px-4 py-1 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Card 5 -->
+                <div class="car-card animate-on-scroll" data-category="sports">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/25433fc4-bc12-494d-a3af-375bc2176866.png" alt="Blue Lamborghini Huracan Performante with carbon fiber accents on racetrack" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Lamborghini Huracan</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 px-3 py-1 rounded-full text-sm">PERFORMANTE</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">5.2L V10 | 631 HP | AWD</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold text-xl">$274,000</span>
+                            <button class="border border-yellow-400 text-yellow-400 px-4 py-1 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Car Card 6 -->
+                <div class="car-card animate-on-scroll" data-category="muscle">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8834bc5e-1d57-4d56-a279-a82dbc6f16a5.png" alt="Restored classic 1969 Chevrolet Camaro SS in black with gold racing stripes" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">1969 Camaro SS</h3>
+                            <span class="bg-yellow-400/20 text-yellow-400 px-3 py-1 rounded-full text-sm">CLASSIC</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">6.5L V8 | Fully Restored | 4-Speed</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold text-xl">$125,000</span>
+                            <button class="border border-yellow-400 text-yellow-400 px-4 py-1 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                                Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Feature Carousel -->
+    <section id="features" class="py-20 px-6 md:px-12 bg-primary-blue">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold mb-16 text-center animate-on-scroll">Why Choose Velocity</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="feature-card p-8 rounded-lg shadow-lg animate-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Award-Winning Service</h3>
+                    <p class="text-gray-300">Recognized as industry leaders with multiple JD Power awards for customer satisfaction.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-lg shadow-lg animate-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Premium Warranties</h3>
+                    <p class="text-gray-300">Comprehensive 5-year warranty with 24/7 roadside assistance on all vehicles.</p>
+                </div>
+                
+                <div class="feature-card p-8 rounded-lg shadow-lg animate-on-scroll" style="transition-delay: 0.3s;">
+                    <div class="feature-icon mb-4">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Secure Transactions</h3>
+                    <p class="text-gray-300">Bank-level encryption and escrow services for all financial transactions.</p>
+                </div>
+            </div>
+            
+            <div class="bg-dark-blue p-8 rounded-lg shadow-lg mt-8 animate-on-scroll special-offer">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold mb-2 text-yellow-400">Limited Time Offer</h3>
+                        <p class="text-xl">0.9% APR Financing for Qualified Buyers</p>
+                    </div>
+                    <div class="md:w-1/2 text-center md:text-right">
+                        <button class="btn-primary">
+                            Apply Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-20 px-6 md:px-12 bg-gradient-to-b from-primary-blue to-dark-blue">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="section-title text-3xl md:text-4xl font-bold mb-16 text-center animate-on-scroll">Client Testimonials</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="testimonial-card p-8 rounded-lg animate-on-scroll">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f7c34d6b-30aa-4cb2-b284-cf80490bbc40.png" alt="Portrait of satisfied male customer in business attire smiling" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Michael R.</h4>
+                            <p class="text-sm text-yellow-400">Verified Owner</p>
+                        </div>
+                    </div>
+                    <p class="italic mb-4">"The team at Velocity made my dream of owning a Ferrari come true. Their attention to detail and personalized service was unmatched."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg animate-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/76e265e1-20c6-493d-9427-d3ff29dd3cba.png" alt="Portrait of happy female customer with sunglasses at car dealership" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah L.</h4>
+                            <p class="text-sm text-yellow-400">Verified Owner</p>
+                        </div>
+                    </div>
+                    <p class="italic mb-4">"I was nervous about buying a classic car online, but Velocity made the process seamless. The car arrived exactly as described - pristine condition."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card p-8 rounded-lg animate-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2e44315b-3c03-40c2-a388-7d8468dd9fee.png" alt="Portrait of middle-aged businessman holding keys to new luxury car" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">James K.</h4>
+                            <p class="text-sm text-yellow-400">Verified Owner</p>
+                        </div>
+                    </div>
+                    <p class="italic mb-4">"The trade-in process was fair and transparent. Got more for my old car than I expected and the financing was competitive. Will definitely return."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section id="contact" class="py-20 px-6 md:px-12 bg-dark-blue">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 animate-on-scroll">Ready for Your Dream Car?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto animate-on-scroll">Join thousands of satisfied customers who found their perfect vehicle with Velocity.</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4 animate-on-scroll">
+                <button class="btn-primary">
+                    Book a Consultation
+                </button>
+                <button class="border border-yellow-400 text-yellow-400 font-semibold px-6 py-3 rounded hover:bg-yellow-400 hover:text-dark-blue">
+                    Call Us: (555) 555-5555
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-black/80 py-12 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-car text-2xl text-yellow-400"></i>
+                        <span class="logo-text text-lg font-bold">VELOCITY</span>
+                    </div>
+                    <p class="text-gray-400">The premier destination for automotive enthusiasts since 2005.</p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-yellow-400">Home</a></li>
+                        <li><a href="#showcase" class="text-gray-400 hover:text-yellow-400">Inventory</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-yellow-400">Services</a></li>
+                        <li><a href="#testimonials" class="text-gray-400 hover:text-yellow-400">Reviews</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400"><i class="fas fa-map-marker-alt mr-2 text-yellow-400"></i> 123 Auto Blvd, Beverly Hills, CA</li>
+                        <li class="text-gray-400"><i class="fas fa-phone mr-2 text-yellow-400"></i> (555) 555-5555</li>
+                        <li class="text-gray-400"><i class="fas fa-envelope mr-2 text-yellow-400"></i> info@velocityauto.com</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold mb-4 text-lg">Follow Us</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-yellow-400 hover:text-dark-blue">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-yellow-400 hover:text-dark-blue">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-yellow-400 hover:text-dark-blue">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-yellow-400 hover:text-dark-blue">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">© 2023 Velocity Automotive. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-yellow-400">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-yellow-400">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-yellow-400">Do Not Sell My Info</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Car filter functionality
+            const filterButtons = document.querySelectorAll('.car-filter-btn');
+            const carCards = document.querySelectorAll('.car-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    
+                    const filter = button.dataset.filter;
+                    
+                    // Filter cards
+                    carCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category === filter) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.md\\:hidden');
+            const mobileMenu = document.createElement('div');
+            mobileMenu.className = 'fixed inset-0 bg-dark-blue/95 z-50 flex flex-col items-center justify-center p-8 md:hidden';
+            mobileMenu.innerHTML = `
+                <button class="absolute top-6 right-6 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="flex flex-col items-center space-y-8 text-xl">
+                    <a href="#" class="nav-link">Home</a>
+                    <a href="#showcase" class="nav-link">Showroom</a>
+                    <a href="#features" class="nav-link">Features</a>
+                    <a href="#testimonials" class="nav-link">Testimonials</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                    <button class="btn-primary mt-4">
+                        Book a Test Drive
+                    </button>
+                </div>
+            `;
+            mobileMenu.style.display = 'none';
+            document.body.appendChild(mobileMenu);
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.style.display = 'flex';
+            });
+            
+            mobileMenu.querySelector('button').addEventListener('click', () => {
+                mobileMenu.style.display = 'none';
+            });
+            
+            // Smooth scroll for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
